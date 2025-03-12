@@ -1,0 +1,382 @@
+/* Base styles */
+:root {
+    --primary-color: hsl(171, 100%, 41%);
+    --text-color: #4a4a4a;
+    --content-width-lg: 1024px;
+    --content-width-md: 1024px;
+    --video-padding: 1rem;
+}
+
+/* Typography scale using Bootstrap's classes */
+.h1, h1 { font-size: calc(1.375rem + 1.5vw) !important; }
+.h2, h2 { font-size: calc(1.325rem + 0.9vw) !important; }
+.h3, h3 { font-size: calc(1.3rem + 0.6vw) !important; }
+.p, p, figcaption { font-size: 1rem !important; }
+
+/* Updated video-content text sizes */
+.video-content p {
+    font-size: calc(1.1rem + 0.3vw) !important;
+    line-height: 1.6;
+}
+
+@media (min-width: 1200px) {
+    .h1, h1 { font-size: 2.5rem !important; }
+    .h2, h2 { font-size: 2rem !important; }
+    .h3, h3 { font-size: 1.75rem !important; }
+    .p, p, figcaption { font-size: 1.1rem !important; }
+    .video-content p { font-size: 1.4rem !important; }
+}
+
+/* Gallery styles */
+.video-gallery-carousel {
+    overflow: hidden;
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    max-width: 1000px;
+}
+
+.video-gallery-item {
+    display: none;
+    width: 100%;
+    max-width: var(--content-width-md);
+}
+
+.video-gallery-item.active {
+    display: block;
+}
+
+.video-gallery-carousel video {
+    width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    background: #fff;
+    padding: var(--video-padding);
+}
+
+.video-gallery-buttons {
+    margin-bottom: 1.25rem;
+    display: flex;
+    gap: 0.625rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: var(--content-width-md);
+}
+
+.video-gallery-buttons .button {
+    padding: 0;
+    height: auto;
+    overflow: hidden;
+    width: 120px;
+    height: 80px;
+}
+
+.video-gallery-buttons .button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-gallery-buttons .button.is-primary {
+    border: 3px solid var(--primary-color);
+    padding: 0;
+}
+
+/* Content styles */
+.video-content {
+    margin: 1.5rem auto;
+    text-align: center;
+    padding: 0 1rem;
+    max-width: var(--content-width-md);
+}
+
+/* Video single styles */
+.video-single {
+    display: none;
+    width: 100%;
+    max-width: 1000px; /* Larger max-width for single videos */
+    margin: 0 auto;
+}
+
+.video-single.active {
+    display: block;
+}
+
+.video-single .video-container {
+    width: 100%;
+    max-width: 1000px;
+    min-width: unset;
+}
+
+.video-single video {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+    background: #fff;
+    padding: 0;
+    margin: 0 auto;
+}
+
+/* Video pair styles */
+.video-pair {
+    display: none;
+    width: 100%;
+    max-width: var(--content-width-md);
+    gap: 0;
+}
+
+.video-pair.active {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.video-pair .video-container {
+    flex: 1;
+    min-width: 300px;
+    width: 50%;
+    max-width: 50%;
+}
+
+/* Video triple styles */
+.video-triple {
+    display: none;
+    width: 100%;
+    max-width: var(--content-width-md);
+    gap: 0;
+}
+
+.video-triple.active {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.video-triple .video-container {
+    flex: 1;
+    min-width: 300px;
+    width: 33.333%;
+    max-width: 33.333%;
+    display: flex;
+}
+
+/* Shared video container styles */
+.video-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0; /* Remove padding from container */
+    margin: 0;
+    background: #fff;
+}
+
+.video-container video {
+    width: 100%;
+    height: auto;
+    max-height: 60vh;
+    object-fit: contain;
+    background: #fff;
+    padding: 0;
+    margin: 0; /* Ensure no margin on video */
+}
+
+/* Caption styles */
+.video-caption {
+    text-align: center;
+    padding: 0.5rem;
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+.pair-caption {
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0 1rem;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.prompt-container {
+    display: inline-block;
+    text-align: left;
+    max-width: 100%; /* Ensure container doesn't overflow */
+}
+
+.prompt-line {
+    display: grid;
+    grid-template-columns: minmax(110px, auto) 1fr; /* Fixed width for labels */
+    gap: 0.5rem;
+    margin-bottom: 0.5rem; /* Add space between lines */
+}
+
+.prompt-label {
+    text-align: right;
+    white-space: nowrap; /* Keep label on one line */
+}
+
+.prompt-text {
+    text-align: left;
+    white-space: normal; /* Allow text to wrap */
+    word-wrap: break-word; /* Break long words if necessary */
+}
+
+.hero-body .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.title.is-2 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Figure styles */
+figure {
+    width: 100%;
+    max-width: var(--content-width-lg);
+    margin: 2rem auto;
+    text-align: left;
+}
+
+figure img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+figure figcaption {
+    margin-top: 1rem;
+    color: var(--text-color);
+    padding: 0 1rem;
+    text-align: left;
+    font-size: 1.2rem !important;
+}
+
+/* Responsive adjustments */
+@media (min-width: 1400px) {
+    .video-single,
+    .video-single .video-container,
+    .video-gallery-carousel {
+        max-width: 1000px; /* Keep consistent on larger screens */
+    }
+}
+
+
+@media (max-width: 768px) {
+    :root {
+        --video-padding: 0.5rem;
+    }
+    
+    .video-pair,
+    .video-triple {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .video-single .video-container video {
+        max-height: 50vh;
+    }
+
+    .video-pair .video-container,
+    .video-triple .video-container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .video-container video {
+        max-height: 40vh;  /* Reduced from 50vh */
+        width: auto;  /* Allow width to adjust based on height */
+        max-width: 100%;  /* Ensure it doesn't overflow container */
+        margin: 0 auto;  /* Center the video if width is less than container */
+    }
+
+    .video-caption {
+        margin: 0.25rem 0;
+    }
+
+    .pair-caption {
+        margin-top: 0.5rem;
+    }
+
+    .prompt-line {
+        grid-template-columns: minmax(90px, auto) 1fr; /* Slightly smaller label width on mobile */
+        gap: 0.25rem; /* Reduce gap on mobile */
+    }
+    
+    .pair-caption {
+        font-size: 1rem; /* Slightly smaller font on mobile */
+        padding: 0 0.5rem; /* Reduce padding on mobile */
+    }
+}
+
+/* Additional responsive adjustment for very small screens */
+@media (max-width: 480px) {
+    .video-container video {
+        max-height: 30vh;  /* Even smaller for very small screens */
+    }
+
+    .video-single .video-container video {
+        max-height: 40vh;
+    }
+
+    .prompt-line {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .prompt-label {
+        text-align: left;
+        font-weight: 500; /* Make labels slightly bolder */
+    }
+
+    .prompt-text {
+        padding-left: 1rem; /* Indent the text */
+    }
+
+    .pair-caption {
+        font-size: 0.95rem; /* Slightly smaller font */
+        padding: 0 0.75rem;
+    }
+}
+
+/* Bootstrap container override */
+.container {
+    max-width: 100%;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 576px) {
+    .container { max-width: 540px; }
+}
+
+@media (min-width: 768px) {
+    .container { max-width: 720px; }
+}
+
+@media (min-width: 992px) {
+    .container { max-width: 960px; }
+}
+
+@media (min-width: 1200px) {
+    .container { max-width: 1140px; }
+}
+
+@media (min-width: 1400px) {
+    .container { max-width: 1320px; }
+}
