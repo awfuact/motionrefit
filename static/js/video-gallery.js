@@ -1,5 +1,7 @@
 const VideoGallery = (function() {
     let animationFrameId = null;
+    // Track current index for each gallery
+    const currentIndices = {};
 
     function syncVideos(videos) {
         const primary = videos[0];
@@ -90,7 +92,16 @@ const VideoGallery = (function() {
 
         const container = document.getElementById(galleryId);
         const videoSets = container.querySelectorAll('.video-single, .video-pair, .video-triple');
-        const buttons = container.parentElement.querySelector('.video-gallery-buttons').querySelectorAll('.button');
+        const totalVideos = videoSets.length;
+        
+        // Apply modulo to wrap around the index
+        index = (index + totalVideos) % totalVideos;
+        
+        // Update current index for this gallery
+        currentIndices[galleryId] = index;
+        
+        // Update dot navigation
+        updateDots(galleryId, index);
         
         videoSets.forEach(set => {
             const videos = set.querySelectorAll('video');
@@ -101,9 +112,6 @@ const VideoGallery = (function() {
             });
             set.classList.remove('active');
         });
-
-        buttons.forEach(button => button.classList.remove('is-primary'));
-        buttons[index].classList.add('is-primary');
 
         const selectedSet = videoSets[index];
         selectedSet.classList.add('active');
@@ -127,18 +135,81 @@ const VideoGallery = (function() {
                 console.error("Error loading videos:", error);
             });
     }
-
-    function initGallery(galleryButtonsId, galleryCarouselId) {
-        const container = document.getElementById(galleryCarouselId);
-
-        // Set up button click handlers
-        const buttonContainer = document.getElementById(galleryButtonsId);
-        buttonContainer.querySelectorAll('.button').forEach(button => {
-            button.addEventListener('click', () => {
-                const index = parseInt(button.dataset.videoIndex);
-                handleVideoSwitch(galleryCarouselId, index);
+    
+    // Function to create and update dot navigation
+    function createDots(galleryId, count, activeIndex) {
+        const dotsContainer = document.getElementById(`${galleryId}-dots`);
+        if (!dotsContainer) return;
+        
+        // Clear existing dots
+        dotsContainer.innerHTML = '';
+        
+        // Create dots
+        for (let i = 0; i < count; i++) {
+            const dot = document.createElement('span');
+            dot.className = 'gallery-dot';
+            if (i === activeIndex) {
+                dot.classList.add('active');
+            }
+            
+            // Add click event to each dot
+            dot.addEventListener('click', () => {
+                handleVideoSwitch(galleryId, i);
             });
+            
+            dotsContainer.appendChild(dot);
+        }
+    }
+    
+    // Function to update dot navigation
+    function updateDots(galleryId, activeIndex) {
+        const dotsContainer = document.getElementById(`${galleryId}-dots`);
+        if (!dotsContainer) return;
+        
+        // Update active state
+        const dots = dotsContainer.querySelectorAll('.gallery-dot');
+        dots.forEach((dot, i) => {
+            if (i === activeIndex) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
         });
+    }
+
+    function initGallery(galleryId) {
+        const container = document.getElementById(galleryId);
+        if (!container) return; // Skip if gallery doesn't exist
+        
+        const videoSets = container.querySelectorAll('.video-single, .video-pair, .video-triple');
+        const totalVideos = videoSets.length;
+        
+        // Initialize current index for this gallery
+        const initialIndex = Array.from(videoSets).findIndex(set => set.classList.contains('active'));
+        currentIndices[galleryId] = initialIndex >= 0 ? initialIndex : 0;
+        
+        // Create dot navigation
+        createDots(galleryId, totalVideos, currentIndices[galleryId]);
+        
+        // Set up arrow navigation buttons
+        const prevBtn = document.querySelector(`#${galleryId}-prev`);
+        const nextBtn = document.querySelector(`#${galleryId}-next`);
+        
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                const currentIndex = currentIndices[galleryId];
+                // Navigate to previous, wrap to end if at beginning
+                handleVideoSwitch(galleryId, currentIndex - 1);
+            });
+        }
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                const currentIndex = currentIndices[galleryId];
+                // Navigate to next, wrap to beginning if at end
+                handleVideoSwitch(galleryId, currentIndex + 1);
+            });
+        }
 
         // Initialize first active set (either pair or triple)
         const firstActiveSet = container.querySelector('.video-single.active, .video-pair.active, .video-triple.active');
@@ -176,11 +247,11 @@ const VideoGallery = (function() {
 
     return {
         init: function() {
-            // Initialize both galleries
-            initGallery('gallery-buttons-real-scene', 'gallery-carousel-real-scene');
-            initGallery('gallery-buttons-dynamic', 'gallery-carousel-dynamic');
-            initGallery('gallery-buttons-static', 'gallery-carousel-static');
-            initGallery('gallery-buttons-long-term', 'gallery-carousel-long-term');
+            // Initialize each gallery with their IDs
+            initGallery('gallery-carousel-long');
+            initGallery('gallery-carousel-replacement');
+            initGallery('gallery-carousel-style');
+            initGallery('gallery-carousel-adjustment');
         },
         cleanup: cleanup
     };

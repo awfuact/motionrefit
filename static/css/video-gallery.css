@@ -5,6 +5,13 @@
     --content-width-lg: 1024px;
     --content-width-md: 1024px;
     --video-padding: 1rem;
+    --arrow-size: 40px;
+    --arrow-bg-color: rgba(0, 0, 0, 0.5);
+    --arrow-color: white;
+    --dot-size: 10px;
+    --dot-active-size: 14px;
+    --dot-color: #ccc;
+    --dot-active-color: #333;
 }
 
 /* Typography scale using Bootstrap's classes */
@@ -28,6 +35,15 @@
 }
 
 /* Gallery styles */
+.video-gallery-carousel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: var(--content-width-md);
+}
+
 .video-gallery-carousel {
     overflow: hidden;
     width: 100%;
@@ -82,6 +98,68 @@
 .video-gallery-buttons .button.is-primary {
     border: 3px solid var(--primary-color);
     padding: 0;
+}
+
+/* Dot navigation styles */
+.gallery-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.gallery-dot {
+    display: inline-block;
+    width: var(--dot-size);
+    height: var(--dot-size);
+    border-radius: 50%;
+    background-color: var(--dot-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gallery-dot.active {
+    background-color: var(--dot-active-color);
+    width: var(--dot-active-size);
+    height: var(--dot-active-size);
+    transform: translateY(-2px);
+}
+
+/* Navigation arrows */
+.nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent; /* Remove background */
+    color: black; /* Black color */
+    border: none;
+    width: var(--arrow-size);
+    height: var(--arrow-size);
+    font-size: calc(var(--arrow-size) * 0.7); /* Larger font size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.2s ease;
+    font-weight: bold; /* Make arrows bolder */
+}
+
+.nav-arrow:hover {
+    transform: translateY(-50%) scale(1.2); /* Scale up slightly on hover */
+}
+
+.prev-arrow {
+    left: -30px; /* Position outside */
+}
+
+.next-arrow {
+    right: -30px; /* Position outside */
+}
+
+/* Remove old indicator styles */
+.gallery-indicator {
+    display: none;
 }
 
 /* Content styles */
@@ -272,10 +350,12 @@ figure figcaption {
     }
 }
 
-
 @media (max-width: 768px) {
     :root {
         --video-padding: 0.5rem;
+        --arrow-size: 32px; /* Slightly smaller on mobile */
+        --dot-size: 8px;
+        --dot-active-size: 12px;
     }
     
     .video-pair,
@@ -318,10 +398,25 @@ figure figcaption {
         font-size: 1rem; /* Slightly smaller font on mobile */
         padding: 0 0.5rem; /* Reduce padding on mobile */
     }
+    
+    .nav-arrow {
+        font-size: calc(var(--arrow-size) * 0.8); /* Adjust size on small screens */
+    }
+    
+    .gallery-dots {
+        gap: 8px;
+        margin-top: 12px;
+    }
 }
 
 /* Additional responsive adjustment for very small screens */
 @media (max-width: 480px) {
+    :root {
+        --arrow-size: 28px; /* Even smaller on very small screens */
+        --dot-size: 6px;
+        --dot-active-size: 10px;
+    }
+    
     .video-container video {
         max-height: 30vh;  /* Even smaller for very small screens */
     }
@@ -349,6 +444,14 @@ figure figcaption {
     .pair-caption {
         font-size: 0.95rem; /* Slightly smaller font */
         padding: 0 0.75rem;
+    }
+    
+    .nav-arrow {
+        font-size: calc(var(--arrow-size) * 0.6); /* Adjust size on small screens */
+    }
+    
+    .gallery-dots {
+        gap: 6px;
     }
 }
 
