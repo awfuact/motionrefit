@@ -108,9 +108,9 @@ body {
 .publication-video {
     position: relative;
     width: 100%;
+    max-width: 1000px;
     height: 0;
-    padding-bottom: 56.25%;
-
+    padding-bottom: 42.9%;
     overflow: hidden;
     border-radius: 10px !important;
 }
