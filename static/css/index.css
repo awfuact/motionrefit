@@ -2,6 +2,24 @@ body {
   font-family: 'Noto Sans', sans-serif;
 }
 
+.button.is-colorful {
+  background: linear-gradient(90deg, 
+    #f093fb, #f5576c, #4eadea, #43e97b, #f6d365, #f093fb);
+  background-size: 600% 100%;
+  border-color: transparent;
+  color: white;
+  animation: gradientFlow 60s linear infinite;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 600% 50%;
+  }
+}
+
 .footer .content p, 
 .footer .content a {
   font-size: 14px !important;
@@ -148,6 +166,5 @@ body {
 .eql-cntrb { 
   font-size: smaller;
 }
-
 
 
